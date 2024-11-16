@@ -1,11 +1,9 @@
 import os
 import re
+import bcrypt
 import json
 from time import sleep as sp
-from passlib.context import CryptContext
 
-# Configuração do passlib
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # Função para limpar a tela
 def clear():
@@ -21,12 +19,12 @@ def validar_email(email):
 
 # Função para criptografar senha
 def criptografar_senha(senha):
-    return pwd_context.hash(senha)
+    return bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt())
 
 
 # Função para verificar se a senha está correta
 def verificar_senha(senha_informada, senha_armazenada):
-    return pwd_context.verify(senha_informada, senha_armazenada)
+    return bcrypt.checkpw(senha_informada.encode('utf-8'), senha_armazenada)
 
 
 # Função para salvar dados do usuário
@@ -34,7 +32,7 @@ def salvar_dados(usuario_nome, usuario_email, senha_criptografada):
     dados = {
         'nome': usuario_nome,
         'email': usuario_email,
-        'senha': senha_criptografada
+        'senha': senha_criptografada.decode('utf-8')
     }
     with open('usuario.json', 'w') as f:
         json.dump(dados, f)
@@ -49,10 +47,21 @@ def carregar_dados():
 
 
 # Função para gerenciar o usuário
+# Função para gerenciar o usuário
 def gerenciar_usuario():
     clear()
     print("\033[1;32m => [Gerenciando usuario...]" + "\033[0m")
     sp(2)
+
+    # Carregar os dados do usuário
+    dados_usuario = carregar_dados()
+    if not dados_usuario:
+        print("\033[1;31mNenhum usuário encontrado. Por favor, crie uma conta primeiro.\033[0m")
+        return
+
+    usuario_nome = dados_usuario['nome']
+    usuario_email = dados_usuario['email']
+    senha_armazenada = dados_usuario['senha'].encode('utf-8')
 
     senha_informada = input("\033[1;32mDigite a senha do usuario: \033[0m")
 
@@ -69,6 +78,7 @@ def gerenciar_usuario():
 
     if voltar == "99":
         return  # Volta para o menu principal
+
 
 
 # Função para criar ou recuperar uma conta
@@ -91,13 +101,15 @@ def criar_ou_recuperar_conta():
         if escolha == '1':
             senha_informada = input("\033[1;32mDigite a senha para login: \033[0m")
 
-            if verificar_senha(senha_informada, dados_usuario['senha']):
+            if verificar_senha(senha_informada, dados_usuario['senha'].encode('utf-8')):
                 print("\033[1;32mLogin bem-sucedido!\033[0m")
+                sp(2)
                 return dados_usuario  # Retorna os dados carregados
             else:
                 print("\033[1;31mSenha incorreta.\033[0m")
                 return None
         elif escolha == '2':
+            clear()
             print("\033[1;34m[::] Criando uma nova conta...\033[0m")
             return criar_nova_conta()
         else:
@@ -128,6 +140,7 @@ def criar_nova_conta():
 # Função principal
 def bne():
     usuario = criar_ou_recuperar_conta()
+    clear()
     print("\n\t\033[1;34m" + """
 +____________________+
 |                    |
