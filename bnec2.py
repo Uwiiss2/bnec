@@ -1,9 +1,11 @@
 import os
 import re
-import bcrypt
 import json
 from time import sleep as sp
+from passlib.context import CryptContext
 
+# Configuração do passlib
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # Função para limpar a tela
 def clear():
@@ -19,12 +21,12 @@ def validar_email(email):
 
 # Função para criptografar senha
 def criptografar_senha(senha):
-    return bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt())
+    return pwd_context.hash(senha)
 
 
 # Função para verificar se a senha está correta
 def verificar_senha(senha_informada, senha_armazenada):
-    return bcrypt.checkpw(senha_informada.encode('utf-8'), senha_armazenada)
+    return pwd_context.verify(senha_informada, senha_armazenada)
 
 
 # Função para salvar dados do usuário
@@ -32,7 +34,7 @@ def salvar_dados(usuario_nome, usuario_email, senha_criptografada):
     dados = {
         'nome': usuario_nome,
         'email': usuario_email,
-        'senha': senha_criptografada.decode('utf-8')
+        'senha': senha_criptografada
     }
     with open('usuario.json', 'w') as f:
         json.dump(dados, f)
@@ -89,7 +91,7 @@ def criar_ou_recuperar_conta():
         if escolha == '1':
             senha_informada = input("\033[1;32mDigite a senha para login: \033[0m")
 
-            if verificar_senha(senha_informada, dados_usuario['senha'].encode('utf-8')):
+            if verificar_senha(senha_informada, dados_usuario['senha']):
                 print("\033[1;32mLogin bem-sucedido!\033[0m")
                 return dados_usuario  # Retorna os dados carregados
             else:
