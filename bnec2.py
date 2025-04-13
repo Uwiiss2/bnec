@@ -1,7 +1,7 @@
 import telebot
 from time import sleep as sp
 from telebot import TeleBot, types
-
+import random
 # Token do Bot
 token = "7864959212:AAHUA3TD-njAcwBLtt2U67voPV_gWd5Ui70"
 bot = telebot.TeleBot(token)
@@ -95,10 +95,9 @@ def menu_inicio(message):
 
 @bot.message_handler(func=lambda message: True)
 def respostas_menu(message):
-    texto = ""
-
     if message.text == "🧘 Respira, calma":
-        texto = """
+        opcoes = [
+        """
 *🧘 RESPIRA, CALMA*  
 
 Respirar pode parecer básico, mas quando feito com intenção, vira um superpoder. A mente da Geração Z vive no modo turbo, e essa é a pausa que você tava precisando.  
@@ -110,142 +109,379 @@ A técnica 4-7-8 é seu botão de reset:
 Repita 4 vezes e sente a paz te abraçando.  
 
 Dica extra: feche os olhos, coloque uma música instrumental e respire com o som. É mágico.
+""",
+        """
+*🧘 PAUSA CONSCIENTE*  
+
+Feche os olhos por 10 segundos. Respire fundo e solte bem devagar.  
+Agora imagine que você tá num lugar tranquilo, onde nada te apressa.  
+
+A ansiedade não manda em você. Quem manda é sua respiração.
+""",
+        """
+*🧘 REINICIANDO A MENTE*  
+
+Use a técnica 4-7-8 para resetar o corpo:  
+• Inspire por 4s  
+• Segure 7s  
+• Solte por 8s  
+
+Repita até o peito se acalmar. A respiração é seu botão secreto de reset.
 """
+    ]
+        texto = random.choice(opcoes)
 
     elif message.text == "🎯 Foco turbo":
-        texto = """
+        opcoes = [
+        """
 *🎯 FOCO TURBO*  
 
-Focar em um mundo de distrações é tipo ser um herói moderno. A técnica Pomodoro te dá uma espada invisível: 25 minutos de pura atenção e 5 minutos de respiro.
+Focar em um mundo de distrações é tipo ser um herói moderno.  
+A técnica Pomodoro te dá uma espada invisível:  
+→ 25 minutos de pura atenção  
+→ 5 minutos de respiro
 
 Crie uma lista de tarefas, coloque uma playlist de concentração e foque numa coisa por vez.  
-→ Depois de 4 ciclos: pausa maior (15 a 30 min).  
+Depois de 4 ciclos: pausa maior (15 a 30 min).
 
-Foco não é rigidez. É escolher com carinho o que merece sua energia naquele momento.
+> Foco não é rigidez. É escolher com carinho o que merece sua energia.
+""",
+        """
+*🎯 FOCO É RESPEITAR SUA ENERGIA*  
+
+Você não precisa ser produtivo o tempo todo.  
+Mas quando decidir focar, faça isso por você.
+
+• Tire distrações do caminho  
+• Escolha uma única tarefa  
+• Respire antes de começar
+
+Foco não é fazer mais, é fazer melhor.
+""",
+        """
+*🎯 FOCO NA REAL*  
+
+Foco não é sobre “trabalhar até cair”.  
+É sobre estar inteiro no que você escolheu fazer agora.
+
+Use o tempo como aliado.  
+→ 25 minutos focado  
+→ 5 minutos de cuidado  
+
+> Você não é máquina. Mas pode criar seu próprio ritmo de potência.
 """
+    ]
+        texto = random.choice(opcoes)
 
     elif message.text == "🌪️ Lidando com o caos":
-        texto = """
-*🌪️ LIDANDO COM O CAOS*  
+        opcoes = [
+        """
+*🌪️ ORGANIZANDO O CAOS*  
 
-Quando tudo parece sair do controle, o segredo é reconectar com o que ainda tá firme dentro de você.  
+Nem tudo precisa ser resolvido hoje.  
+Às vezes, só de respirar e listar o que está nas suas mãos, metade da ansiedade já se dissolve.
 
-1. Pare por 1 minuto.  
-2. Respire com ritmo (inspira 4s, segura 4s, solta 4s, pausa 4s).  
-3. Foque em uma microação: organizar sua mesa, tomar água, escrever o que sente.  
+1. Inspire fundo  
+2. Escreva 3 coisas que você pode fazer agora  
+3. Escolha uma pra focar  
 
-Você não precisa ter todas as respostas hoje. Só precisa de um ponto de apoio. E esse ponto pode ser agora.
+> Um passo de cada vez ainda é movimento.
+""",
+        """
+*🌪️ CALMA NO OLHO DO FURACÃO*  
+
+Mesmo com tudo rodando ao redor, você pode criar um centro de paz.
+
+Use a Respiração da Caixinha:  
+→ Inspire 4s  
+→ Segure 4s  
+→ Solte 4s  
+→ Pausa 4s  
+
+Repita. Se precisar, de novo. E mais uma vez.
+""",
+        """
+*🌪️ QUANDO NADA FAZ SENTIDO*  
+
+Pega um papel e uma caneta.  
+Escreve tudo que te incomoda, sem filtro.  
+Jogue fora, queime ou só rasgue.
+
+Desabafar também é liberar memória RAM da mente.
 """
+    ]
+        texto = random.choice(opcoes)
 
     elif message.text == "💖 Autoestima sem filtro":
-        texto = """
-*💖 AUTOESTIMA SEM FILTRO*  
+        opcoes = [
+        """
+*💖 AUTOESTIMA É ACOLHIMENTO*  
 
-Autoestima não é se achar perfeito — é saber se abraçar mesmo nos dias em que tudo parece errado.  
+Autoestima não é se sentir incrível todos os dias.  
+É saber se tratar com respeito mesmo quando a mente sabota.
 
-Tenta esse exercício:  
-• Liste 3 coisas que você gosta em si (por dentro ou por fora)  
-• Escreva uma carta pra si como se fosse pra uma pessoa que ama  
-• Leia em voz alta.  
-• Repita sempre que duvidar de si.  
+→ Fale com você como falaria com um amigo que ama.  
+→ Reconheça um elogio sem se envergonhar.  
+→ Se permita errar sem se odiar por isso.
+""",
+        """
+*💖 SE OLHA COM MAIS GENTILEZA*  
 
-Você é mais bonito quando se trata com amor.  
+Você é muito mais do que pensa.  
+O problema é que a mente só destaca defeitos.
+
+→ Liste 3 coisas que você já superou  
+→ Lembre-se: não é aparência, é presença  
+→ Cuide de você como quem cultiva uma flor rara
+""",
+        """
+*💖 A BELEZA DE SER REAL*  
+
+Não precisa caber num filtro.  
+Não precisa agradar todo mundo.  
+Sua versão mais valiosa é a verdadeira.
+
+Autoestima começa no “eu sou suficiente, mesmo com falhas”.
 """
+    ]
+        texto = random.choice(opcoes)
 
     elif message.text == "📵 Desconecta, respira":
-        texto = """
-*📵 DESCONECTA, RESPIRA*  
+        opcoes = [
+        """
+*📵 DESLIGA PRA CONECTAR COM VOCÊ*  
 
-A gente vive grudado na tela. Mas seu cérebro precisa de silêncio.  
+5 minutos sem tela. Só isso.  
+Sente. Respira. Repara no que está ao redor.  
+O mundo digital é barulhento, mas sua alma pede silêncio.
 
-→ Tire 5 minutos offline. Sem música, sem notificações.  
-→ Respire. Alongue. Olhe pela janela.  
-→ Coloque a mão no peito e sinta o coração. Ele tá contigo desde sempre.  
+→ Você não precisa responder tudo agora.
+""",
+        """
+*📵 PAUSA DIGITAL = PRESENÇA MENTAL*  
 
-Digital detox é mais do que tendência — é um reencontro com a sua paz interior.
+A cada notificação, sua atenção se parte em pedacinhos.  
+Hoje, tente:  
+→ Deixar o celular no modo avião por 10 min  
+→ Fazer algo analógico (escrever, desenhar, olhar o céu)
+
+Você vai ver o quanto sua mente agradece.
+""",
+        """
+*📵 UM TEMPO PRA RESPIRAR*  
+
+Seu tempo não é renovável.  
+Gastar tudo em rolagem infinita deixa a mente cansada.
+
+→ Se afasta da tela  
+→ Bebe água  
+→ Faz 3 respirações profundas
+
+Só isso já muda seu dia.
 """
+    ]
+        texto = random.choice(opcoes)
 
     elif message.text == "🫂 Fazer novas amizades":
-        texto = """
-*🫂 FAZER NOVAS AMIZADES*  
+        opcoes = [
+        """
+*🫂 SE ABRIR É A PONTE*  
 
-A conexão humana cura. Mas começa com um simples “oi”.  
+Todo mundo sente medo de parecer estranho. Mas a verdade é: todo mundo quer ser notado.
 
-Se você tá lendo isso, o universo tá dizendo: se abre um pouquinho.  
-• Manda uma mensagem no grupo.  
-• Conta o que tá sentindo.  
-• Responde alguém com carinho.  
+→ Envie um “oi” no grupo  
+→ Responda alguém com empatia  
+→ Mostre quem você é com leveza
 
-Gente real precisa de conversas reais. E você pode ser o início disso pra alguém.
+> Gente boa atrai gente boa.
+""",
+        """
+*🫂 CONVERSAS CURAM*  
+
+Quando você compartilha, você liberta.  
+E quando você escuta, você acolhe.
+
+→ Conexões profundas começam com escuta leve  
+→ Não precisa impressionar, só estar presente
+
+> No fim, todo mundo quer ser ouvido com atenção.
+""",
+        """
+*🫂 SEJA A MÃO QUE SE ESTENDE*  
+
+Talvez alguém no grupo esteja esperando exatamente por alguém como você.
+
+→ Inicie uma conversa real  
+→ Pergunte: “como você tá hoje?”  
+→ Fale algo que te marcou no dia
+
+O que você cria com presença, vira laço.
 """
+    ]
+        texto = random.choice(opcoes)
 
     elif message.text == "💌 Conhecer alguém especial":
-        texto = """
-*💌 CONHECER ALGUÉM ESPECIAL*  
+        opcoes = [
+        """
+*💌 TUDO COMEÇA EM VOCÊ*  
 
-Antes de encontrar alguém especial, o mais importante é saber que você *já é* especial.  
+Quem se cuida, se atrai. Cultive sua vibe. O resto vem.
 
-→ Cuide da sua mente, do seu espaço, do seu tempo.  
-→ Se conecte com o que te faz bem.  
+→ Se conheça antes de querer alguém  
+→ Crie uma energia que você mesmo goste de sentir  
+→ O que é leve, chega naturalmente
+""",
+        """
+*💌 LEVEZA NO AMOR*  
 
-O amor saudável chega quando a gente tá em paz consigo. E quando chega, não traz dúvida — traz leveza.
+Antes de amar alguém, esteja leve com você mesmo. O resto acontece.
+
+→ Amor saudável não sufoca  
+→ Relacionamento bom soma, não te puxa pra baixo  
+→ Se for real, vai fluir
+""",
+        """
+*💌 AMOR NÃO SE FORÇA*  
+
+Respira. Seja você. O que é real encontra um jeito de chegar.
+
+→ Você não precisa correr atrás de quem não quer ficar  
+→ Quando você se ama, atrai amor do bom  
+→ Leveza primeiro. Paixão depois.
 """
+    ]
+        texto = random.choice(opcoes)
 
     elif message.text == "🧠 Autocuidado mental extra":
-        texto = """
-*🧠 AUTOCUIDADO MENTAL EXTRA*  
+        opcoes = [
+        """
+*🧠 RITUAL MENTAL*  
 
-Quer algo a mais? Então bora de rituais rápidos que fortalecem a mente:  
+Escreva como se sente. Beba água. Respire fundo.  
+Coisas simples salvam dias inteiros.
 
-• Diário da mente (escreve o que tá sentindo, sem filtro)  
-• Lista de gratidão (mesmo que só com uma coisa)  
-• Ritual de presença: água gelada no rosto, respiração lenta e mantra tipo: “Eu tô aqui. Eu tô bem.”  
+→ Autocuidado é parar de ignorar sua voz interior  
+→ Escute seu cansaço sem culpa
+""",
+        """
+*🧠 PRESENÇA*  
 
-Autocuidado é escutar o corpo e a alma com atenção.
+Feche os olhos. Respire 5x com intenção.  
+Toque no seu próprio peito. Você está aqui. Agora.
+
+→ O futuro pode esperar. Sua paz é agora  
+→ Respiração é âncora, não remendo
+""",
+        """
+*🧠 UM MOMENTO PRA VOCÊ*  
+
+O mundo pode esperar 10 minutos. Você não.  
+Cuide do seu agora. Ele é tudo que existe.
+
+→ Tome um banho com atenção  
+→ Faça uma caminhada em silêncio  
+→ Cuide de você como quem rega uma planta rara
 """
+    ]
+        texto = random.choice(opcoes)
 
     elif message.text == "🎧 Me acalmar com música":
-        texto = """
-*🎧 ME ACALMAR COM MÚSICA*  
+        opcoes = [
+        """
+*🎧 PAZ EM NOTAS*  
 
-A música certa acalma a alma. Então dá o play em uma dessas vibes:  
+Lofi, sons da natureza ou piano. Dê play e respire com a batida.
 
-→ Sons da natureza  
-→ Lofi pra relaxar  
-→ Mantras ou instrumentos de piano  
-→ White noise (barulho de chuva, por exemplo)  
+→ Escolha uma playlist calma  
+→ Deite ou sente confortavelmente  
+→ Respire com o som
 
-Coloca o fone, deita um pouco ou só fecha os olhos.  
-Deixa a música limpar o que a ansiedade bagunçou.
+Você não precisa entender, só sentir.
+""",
+        """
+*🎧 CALMA EM FORMA DE SOM*  
+
+Feche os olhos. Escolha uma música tranquila.  
+Se entregue ao som, sem pensar em nada.
+
+→ Sons guiam a mente pra fora do caos  
+→ Ouvir também é cuidar
+""",
+        """
+*🎧 SUA TRILHA DE PAZ*  
+
+Fones, música suave, respiração lenta.  
+Isso é autocuidado sonoro.
+
+→ Crie sua própria playlist de cura  
+→ Use sempre que o mundo parecer demais  
+→ Música toca onde as palavras não alcançam
 """
+    ]
+        texto = random.choice(opcoes)
 
     elif message.text == "✨ O Guia do Carisma":
-        texto = """
-*✨ O GUIA DO CARISMA*  
+        opcoes = [
+        """
+*✨ CARISMA É ENERGIA*  
 
-Carisma não é sobre falar bonito. É sobre presença, escuta e energia.  
+Presença, escuta, sorriso sincero. O segredo tá nos detalhes. Seja real.
 
-Dicas que funcionam:  
-• Olhe nos olhos (sem forçar)  
-• Ouça mais do que fala  
-• Sorria com verdade  
-• Use o nome da pessoa nas conversas  
-• Faça perguntas com interesse real  
+→ Olhe nos olhos  
+→ Chame pelo nome  
+→ Demonstre interesse real
 
-E o principal: *goste de quem você é*. Quem se gosta, transborda. E isso é o que atrai.
+Você não precisa forçar. Quem brilha de verdade não grita, só aparece.
+""",
+        """
+*✨ GENTE QUE BRILHA*  
+
+Quem se gosta, transborda. Trabalhe seu brilho interno. Isso é magnético.
+
+→ Cuide da sua energia antes de entrar em um lugar  
+→ Escute com o coração  
+→ Faça perguntas que abrem sorrisos
+
+Carisma é empatia em movimento.
+""",
+        """
+*✨ IMPACTO SEM FORÇAR*  
+
+Carisma é fazer o outro se sentir bem.
+
+→ Dê atenção sincera  
+→ Use o humor como ponte, não como escudo  
+→ Mostre quem você é com tranquilidade
+
+As pessoas lembram de como você as fez sentir.
 """
+    ]
+        texto = random.choice(opcoes)
 
     elif message.text == "📰 Fique por dentro das notícias":
-        texto = """
-*📰 NOTÍCIAS E ATUALIZAÇÕES*  
+        opcoes = [
+        """
+*📰 ENTRE NO NOSSO GRUPO*  
 
-Quer receber conteúdos novos, desafios semanais e aulas especiais?
+@guiadamente — conteúdo novo, desafios, conversas, acolhimento.  
+Vem com a gente e fortalece tua mente com a [galera certa](https://t.me/guiadamente).
+""",
+        """
+*📰 GRUPO OFICIAL*  
 
-→ Entre no nosso grupo oficial:  
-[clica aqui!](https://t.me/guiadamente)  
+Quer crescer com outros agentes da mente?  
+Aqui rolam dicas diárias, desafios semanais e apoio de verdade:  
+Nossa [página oficial](https://t.me/guiadamente)
+""",
+        """
+*📰 CONTEÚDO EXCLUSIVO*  
 
-Lá você vai ficar por dentro das novidades, conversar com outros agentes da mente e crescer junto com a gente.
+Quer saber de tudo em primeira mão?  
+→ [Clique aqui](https://t.me/guiadamente) 
+→ Receba desafios, novidades e aulas especiais direto no grupo!
 """
+    ]
+        texto = random.choice(opcoes)
 
     if texto:
         bot.send_message(message.chat.id, texto, parse_mode="Markdown", disable_web_page_preview=True)
